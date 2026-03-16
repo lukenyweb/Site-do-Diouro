@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>°•° Meu Negócio Digital — Sites de Luxo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #F0D080;
+      --gold-dim: #6b5720;
+      --black: #050403;
+      --glass: rgba(255,255,255,0.03);
+      --border: rgba(201,168,76,0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--black);
+      color: #fff;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── CURSOR ─── */
+    .cursor, .cursor-ring {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+    .cursor { width: 10px; height: 10px; background: var(--gold); transition: width .18s, height .18s; }
+    .cursor-ring { width: 34px; height: 34px; border: 1px solid rgba(201,168,76,.5); z-index: 9998; transition: width .25s, height .25s, opacity .3s; }
+    .cursor.big { width: 18px; height: 18px; }
+    .cursor-ring.big { width: 58px; height: 58px; opacity: .8; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: 22px 64px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: linear-gradient(to bottom, rgba(5,4,3,.97) 0%, transparent 100%);
+    }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 5px; color: var(--gold); }
+    .nav-links { display: flex; gap: 38px; }
+    .nav-links a {
+      font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(255,255,255,.5); text-decoration: none; transition: color .3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: none; }
+    .nav-burger span { display: block; width: 24px; height: 1px; background: var(--gold); }
+
+    /* ─── HERO ─── */
+    #hero {
+      height: 100vh; position: relative;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% 105%, rgba(201,168,76,.14) 0%, transparent 65%),
+        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    }
+    .hero-bg::after { content:''; position:absolute; inset:0; background:rgba(5,4,3,.74); }
+    .grid-lines {
+      position: absolute; inset: 0; z-index: 1;
+      background-image:
+        linear-gradient(rgba(201,168,76,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,.035) 1px, transparent 1px);
+      background-size: 72px 72px;
+    }
+    .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 24px; }
+
+    .hero-eyebrow {
+      font-size: 10px; letter-spacing: 7px; text-transform: uppercase; color: var(--gold);
+      margin-bottom: 28px; opacity: 0; animation: fadeUp .8s .2s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(58px, 9.5vw, 128px);
+      font-weight: 300; line-height: .88; letter-spacing: -1px; color: #fff;
+      opacity: 0; animation: fadeUp .9s .4s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--gold-light); }
+    .hero-sub {
+      font-size: clamp(13px, 1.7vw, 17px); font-weight: 300;
+      color: rgba(255,255,255,.5); margin: 34px auto 0; max-width: 500px; line-height: 1.85;
+      opacity: 0; animation: fadeUp .9s .6s forwards;
+    }
+    .hero-cta {
+      display: flex; gap: 18px; justify-content: center; margin-top: 48px; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp .9s .8s forwards;
+    }
+    .scroll-hint {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 9px;
+      opacity: 0; animation: fadeUp 1s 1.3s forwards;
+    }
+    .scroll-hint span { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,.28); }
+    .scroll-line { width: 1px; height: 46px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s infinite; }
+
+    /* ─── BUTTONS ─── */
+    .btn-primary {
+      padding: 15px 42px; background: var(--gold); color: #000;
+      border: none; font-family: 'DM Sans'; font-size: 11px; font-weight: 500;
+      letter-spacing: 2.5px; text-transform: uppercase; cursor: none; transition: all .3s;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 18px 38px rgba(201,168,76,.28); }
+    .btn-outline {
+      padding: 14px 42px; background: transparent; color: var(--gold);
+      border: 1px solid var(--gold-dim); font-family: 'DM Sans'; font-size: 11px; font-weight: 500;
+      letter-spacing: 2.5px; text-transform: uppercase; cursor: none; transition: all .3s;
+      text-decoration: none; display: inline-block;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+    .btn-outline:hover { background: rgba(201,168,76,.08); border-color: var(--gold); }
+
+    /* ─── SECTIONS BASE ─── */
+    .sec-wrap { max-width: 1280px; margin: 0 auto; padding: 0 64px; }
+    .sec-label { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+    .sec-num { font-family: 'Bebas Neue'; font-size: 110px; color: rgba(201,168,76,.05); line-height: 1; margin-bottom: -26px; }
+    .sec-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 3.8vw, 54px); font-weight: 300; line-height: 1.08; color: #fff; margin-bottom: 24px; }
+    .sec-text { font-size: 15px; color: rgba(255,255,255,.46); line-height: 1.95; }
+
+    /* ─── SOBRE ─── */
+    #sobre { padding: 140px 0; }
+    .sobre-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center; }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .stat-box {
+      background: var(--glass); border: 1px solid var(--border);
+      padding: 38px 28px; transition: border-color .3s;
+    }
+    .stat-box:hover { border-color: rgba(201,168,76,.38); }
+    .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300; color: var(--gold); line-height: 1; }
+    .stat-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,.36); margin-top: 9px; }
+
+    /* ─── SERVIÇOS ─── */
+    #servicos { padding: 120px 0; background: linear-gradient(to bottom, transparent, rgba(201,168,76,.025), transparent); }
+    .services-head { text-align: center; max-width: 560px; margin: 0 auto 72px; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .svc-card {
+      background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.055);
+      padding: 46px 36px; position: relative; overflow: hidden; transition: all .4s;
+    }
+    .svc-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0); transition: transform .4s;
+    }
+    .svc-card:hover { background: rgba(201,168,76,.045); border-color: rgba(201,168,76,.22); transform: translateY(-4px); }
+    .svc-card:hover::before { transform: scaleX(1); }
+    .svc-icon { font-size: 32px; margin-bottom: 20px; display: block; }
+    .svc-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; color: #fff; margin-bottom: 13px; }
+    .svc-desc { font-size: 13px; color: rgba(255,255,255,.42); line-height: 1.82; }
+    .svc-price { margin-top: 26px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.055); font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--gold); }
+
+    /* ─── PORTEFÓLIO ─── */
+    #portfolio { padding: 120px 0; }
+    .port-head { margin-bottom: 64px; }
+
+    /* GRID 2 colunas, gap generoso */
+    .port-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .port-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      background: #0c0a07;
+      transition: border-color .4s, transform .35s, box-shadow .4s;
+      cursor: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .port-card:hover {
+      border-color: rgba(201,168,76,.45);
+      transform: translateY(-6px);
+      box-shadow: 0 32px 72px rgba(0,0,0,.65), 0 0 0 1px rgba(201,168,76,.1);
+    }
+
+    /* Imagem proporção 3:2 */
+    .port-card-img {
+      width: 100%;
+      aspect-ratio: 3/2;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .port-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(.55) saturate(.6);
+      transition: transform .9s ease, filter .5s;
+    }
+    .port-card:hover .port-card-img img {
+      transform: scale(1.06);
+      filter: brightness(.38) saturate(1.2);
+    }
+
+    /* Gradiente dourado sutil ao hover */
+    .port-card-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(201,168,76,.1) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity .45s;
+    }
+    .port-card:hover .port-card-img::after { opacity: 1; }
+
+    /* Número decorativo */
+    .port-card-num {
+      position: absolute; top: 14px; right: 16px;
+      font-family: 'Bebas Neue'; font-size: 48px;
+      color: rgba(201,168,76,.13);
+      line-height: 1; pointer-events: none;
+      transition: color .4s;
+    }
+    .port-card:hover .port-card-num { color: rgba(201,168,76,.26); }
+
+    /* Barra dourada no topo */
+    .port-card-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .5s ease;
+      z-index: 2;
+    }
+    .port-card:hover .port-card-bar { transform: scaleX(1); }
+
+    /* Corpo do card */
+    .port-card-body {
+      padding: 26px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .port-card-tag {
+      display: inline-block; font-size: 9px; letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--gold); background: rgba(201,168,76,.07);
+      border: 1px solid rgba(201,168,76,.2);
+      padding: 4px 12px; margin-bottom: 12px;
+      width: fit-content;
+    }
+
+    .port-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 400; color: #fff;
+      line-height: 1.15; margin-bottom: 10px;
+    }
+
+    .port-card-desc {
+      font-size: 13px; color: rgba(255,255,255,.4);
+      line-height: 1.85; margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .port-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 18px; border-top: 1px solid rgba(255,255,255,.06);
+      margin-top: auto;
+    }
+    .port-card-services {
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,.26);
+    }
+    .port-card-arrow {
+      width: 34px; height: 34px;
+      border: 1px solid rgba(201,168,76,.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 14px; transition: all .3s;
+      flex-shrink: 0;
+    }
+    .port-card:hover .port-card-arrow { background: var(--gold); color: #000; border-color: var(--gold); }
+
+    /* ─── TESTEMUNHOS ─── */
+    #testemunhos { padding: 100px 0; background: rgba(201,168,76,.018); }
+    .test-head { text-align: center; margin-bottom: 60px; }
+    .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .test-card {
+      background: var(--glass); border: 1px solid rgba(255,255,255,.055);
+      padding: 38px 30px; transition: border-color .3s;
+    }
+    .test-card:hover { border-color: rgba(201,168,76,.22); }
+    .test-stars { font-size: 13px; color: var(--gold); margin-bottom: 18px; letter-spacing: 2px; }
+    .test-text { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-style: italic; font-weight: 300; color: rgba(255,255,255,.78); line-height: 1.65; margin-bottom: 22px; }
+    .test-author { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(201,168,76,.55); }
+
+    /* ─── CONTACTO ─── */
+    #contacto { padding: 140px 0; text-align: center; position: relative; overflow: hidden; }
+    #contacto::before {
+      content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:700px; height:700px;
+      background: radial-gradient(circle, rgba(201,168,76,.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .contact-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(46px, 7.5vw, 108px); font-weight: 300; line-height: .88; margin-bottom: 38px; position: relative; z-index: 1; }
+    .contact-title em { font-style: italic; color: var(--gold-light); }
+    .contact-sub { font-size: 15px; color: rgba(255,255,255,.38); margin-bottom: 52px; line-height: 1.8; position: relative; z-index: 1; }
+    .contact-buttons { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+    .btn-wa {
+      padding: 17px 50px; background: #25D366; color: #fff; border: none;
+      font-family: 'DM Sans'; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+      cursor: none; text-decoration: none; display: inline-flex; align-items: center; gap: 11px; transition: all .3s;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+    .btn-wa:hover { background: #1ebe5c; transform: translateY(-3px); box-shadow: 0 20px 48px rgba(37,211,102,.24); }
+
+    /* ─── FOOTER ─── */
+    footer { padding: 36px 64px; border-top: 1px solid rgba(255,255,255,.045); display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-family: 'Bebas Neue'; font-size: 17px; letter-spacing: 4px; color: var(--gold); }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,.2); letter-spacing: 1px; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:.28} 50%{opacity:.9} }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      .sec-wrap { padding: 0 24px; }
+      .sobre-inner { grid-template-columns: 1fr; gap: 52px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .port-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+      .test-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 14px; padding: 28px 24px; text-align: center; }
+      #sobre, #servicos, #portfolio, #testemunhos, #contacto { padding: 80px 0; }
+    }
+    @media (max-width: 540px) {
+      .port-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">°•°.M.N.D</div>
+    <div class="nav-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#portfolio">Portefólio</a>
+      <a href="#testemunhos">Clientes</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="nav-burger" onclick="this.classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="grid-lines"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">°•°.Design Digital de Luxo &nbsp;·&nbsp; Portugal</p>
+      <h1 class="hero-title">Meu<br><em>Negócio</em><br>Digital</h1>
+      <p class="hero-sub">Transformo ideias em sites modernos, elegantes e profissionais — prontos para atrair clientes e crescer o teu negócio. 👨🏿‍💻✨</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="document.getElementById('portfolio').scrollIntoView({behavior:'smooth'})">Ver Portefólio</button>
+        <a href="#contacto" class="btn-outline">Falar Comigo</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="sec-wrap">
+      <div class="sobre-inner">
+        <div>
+          <div class="sec-num">01</div>
+          <div class="sec-label">Sobre Mim</div>
+          <h2 class="sec-title">Criatividade com<br><em style="font-style:italic;color:var(--gold-light)">propósito</em> real</h2>
+          <p class="sec-text">Crio sites modernos e funcionais para qualquer tipo de negócio — com atenção total aos detalhes, design de alto nível e experiências que os teus clientes não esquecem. Cada projeto é único, pensado para ti e para os teus objetivos.</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box reveal">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Dedicação</div>
+          </div>
+          <div class="stat-box reveal">
+            <div class="stat-number">4+</div>
+            <div class="stat-label">Projetos</div>
+          </div>
+          <div class="stat-box reveal">
+            <div class="stat-number">24h</div>
+            <div class="stat-label">Resposta</div>
+          </div>
+          <div class="stat-box reveal">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Revisões</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos">
+    <div class="sec-wrap">
+      <div class="services-head">
+        <div class="sec-num" style="text-align:center">02</div>
+        <div class="sec-label" style="text-align:center">O Que Ofereço</div>
+        <h2 class="sec-title" style="text-align:center">Serviços <em style="font-style:italic;color:var(--gold-light)">Exclusivos</em></h2>
+      </div>
+      <div class="services-grid">
+        <div class="svc-card reveal">
+          <span class="svc-icon">🖥️</span>
+          <div class="svc-title">Site de 1 Página</div>
+          <p class="svc-desc">Perfeito para presença online rápida. Design moderno, botão WhatsApp integrado e otimizado para telemóvel.</p>
+          <div class="svc-price">A partir de €80</div>
+        </div>
+        <div class="svc-card reveal">
+          <span class="svc-icon">🏢</span>
+          <div class="svc-title">Site Multi-Páginas</div>
+          <p class="svc-desc">Sobre, serviços, portefólio, contacto. Completo e profissional, com navegação fluida.</p>
+          <div class="svc-price">A partir de €150</div>
+        </div>
+        <div class="svc-card reveal">
+          <span class="svc-icon">✨</span>
+          <div class="svc-title">Design de Luxo</div>
+          <p class="svc-desc">Animações premium, tipografia elegante, efeitos visuais exclusivos que impressionam.</p>
+          <div class="svc-price">A partir de €200</div>
+        </div>
+        <div class="svc-card reveal">
+          <span class="svc-icon">📱</span>
+          <div class="svc-title">WhatsApp & Contacto</div>
+          <p class="svc-desc">Botões de contacto direto, mensagens automáticas e formulários para receber clientes facilmente.</p>
+          <div class="svc-price">Incluído em todos</div>
+        </div>
+        <div class="svc-card reveal">
+          <span class="svc-icon">🚀</span>
+          <div class="svc-title">Publicação Online</div>
+          <p class="svc-desc">Coloco o teu site online com link real e ensino-te a partilhar nas redes sociais.</p>
+          <div class="svc-price">Incluído em todos</div>
+        </div>
+        <div class="svc-card reveal">
+          <span class="svc-icon">🛠️</span>
+          <div class="svc-title">Manutenção</div>
+          <p class="svc-desc">Atualizo o teu site sempre que precisares: textos, fotos, preços ou novas páginas.</p>
+          <div class="svc-price">A combinar</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ PORTEFÓLIO ══════ -->
+  <section id="portfolio">
+    <div class="sec-wrap">
+      <div class="port-head">
+        <div class="sec-num">03</div>
+        <div class="sec-label">Portefólio</div>
+        <h2 class="sec-title">Trabalhos <em style="font-style:italic;color:var(--gold-light)">Realizados</em></h2>
+      </div>
+
+      <!-- CARDS -->
+      <div class="port-grid">
+
+        <!-- BARBEARIA LUXO -->
+        <div class="port-card reveal">
+          <div class="port-card-img">
+            <div class="port-card-bar"></div>
+            <img src="https://images.pexels.com/photos/3998429/pexels-photo-3998429.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Barbearia Luxo">
+            <div class="port-card-num">01</div>
+          </div>
+          <div class="port-card-body">
+            <div class="port-card-tag">✂️ &nbsp;Barbearia</div>
+            <div class="port-card-title">Barbearia Luxo</div>
+            <p class="port-card-desc">Site multi-páginas com galeria de vídeos reais de cortes, apresentação da equipa de barbeiros profissionais, preçário e marcação direta pelo WhatsApp.</p>
+            <div class="port-card-footer">
+              <div class="port-card-services">Corte · Barba · Design · Equipa</div>
+              <div class="port-card-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CAFETARIA AURORA DOURADA -->
+        <div class="port-card reveal">
+          <div class="port-card-img">
+            <div class="port-card-bar"></div>
+            <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=85" alt="Cafetaria Aurora Dourada">
+            <div class="port-card-num">02</div>
+          </div>
+          <div class="port-card-body">
+            <div class="port-card-tag">☕ &nbsp;Cafetaria</div>
+            <div class="port-card-title">Cafetaria Aurora Dourada</div>
+            <p class="port-card-desc">Site elegante com menu de especialidades, galeria do espaço, história da cafetaria com vídeos em destaque e reservas via WhatsApp integradas.</p>
+            <div class="port-card-footer">
+              <div class="port-card-services">Menu · Ambiente · Reservas</div>
+              <div class="port-card-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SALÃO DE BELEZA LUXO & ELEGÂNCIA -->
+        <div class="port-card reveal">
+          <div class="port-card-img">
+            <div class="port-card-bar"></div>
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=85" alt="Salão de Beleza Luxo e Elegância">
+            <div class="port-card-num">03</div>
+          </div>
+          <div class="port-card-body">
+            <div class="port-card-tag">💅 &nbsp;Salão de Beleza</div>
+            <div class="port-card-title">Salão Luxo & Elegância</div>
+            <p class="port-card-desc">Site feminino e sofisticado com serviços detalhados, galeria de transformações, vídeos do ambiente e agendamento direto pelo WhatsApp.</p>
+            <div class="port-card-footer">
+              <div class="port-card-services">Cabelo · Unhas · Maquilhagem · Facial</div>
+              <div class="port-card-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PASTELARIA DOCE SABOR -->
+        <div class="port-card reveal">
+          <div class="port-card-img">
+            <div class="port-card-bar"></div>
+            <img src="https://images.pexels.com/photos/205961/pexels-photo-205961.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Pastelaria Doce Sabor">
+            <div class="port-card-num">04</div>
+          </div>
+          <div class="port-card-body">
+            <div class="port-card-tag">🍰 &nbsp;Pastelaria</div>
+            <div class="port-card-title">Pastelaria Doce Sabor</div>
+            <p class="port-card-desc">Site artesanal de luxo com menu completo de doces e salgados, galeria de vídeos das criações, história da pastelaria e encomendas pelo WhatsApp.</p>
+            <div class="port-card-footer">
+              <div class="port-card-services">Bolos · Doces · Salgados · Encomendas</div>
+              <div class="port-card-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTEMUNHOS -->
+  <section id="testemunhos">
+    <div class="sec-wrap">
+      <div class="test-head">
+        <div class="sec-num" style="text-align:center">04</div>
+        <div class="sec-label" style="text-align:center">Clientes</div>
+        <h2 class="sec-title" style="text-align:center">O Que Dizem <em style="font-style:italic;color:var(--gold-light)">de Mim</em></h2>
+      </div>
+      <div class="test-grid">
+        <div class="test-card reveal">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-text">"Ficou muito acima do que esperava. Profissional, rápido e com um resultado incrível!"</div>
+          <div class="test-author">— João M., Portugal</div>
+        </div>
+        <div class="test-card reveal">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-text">"O meu negócio cresceu muito. Os clientes chegam pelo link que partilho no Instagram."</div>
+          <div class="test-author">— Carla S., Lisboa</div>
+        </div>
+        <div class="test-card reveal">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-text">"Excelente trabalho! Entregou no prazo e ainda me ajudou a publicar online. Recomendo!"</div>
+          <div class="test-author">— Pedro A., Portugal Lisboa</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <h2 class="contact-title">
+      Vamos<br><em>Trabalhar</em><br>Juntos?
+    </h2>
+    <p class="contact-sub">
+      Envia-me mensagem agora mesmo. Respondo rápido e<br>
+      juntos criamos o site perfeito para o teu negócio.💡
+    </p>
+    <div class="contact-buttons">
+      <a href="https://wa.me/244924302407?text=Olá!%20Vi%20o%20seu%20site%20e%20estou%20interessado%20nos%20seus%20serviços.%20Podemos%20conversar?😊" target="_blank" class="btn-wa">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Falar no WhatsApp
+      </a>
+      <button class="btn-primary" onclick="alert('°•°.Obrigado pelo interesse!\nEnvia-me mensagem no WhatsApp e responderei em breve.😊')">
+        Pedir Orçamento
+      </button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">°•°.Meu Negócio Digital</div>
+    <div class="footer-copy">© 2026 · Todos os direitos reservados · Portugal</div>
+  </footer>
+
+  <script>
+    // ── Cursor
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => {
+      mx=e.clientX; my=e.clientY;
+      cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+    });
+    (function tick(){
+      rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
+      ring.style.left=rx+'px'; ring.style.top=ry+'px';
+      requestAnimationFrame(tick);
+    })();
+    document.querySelectorAll('a,button,.port-card,.svc-card,.stat-box').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{ cursor.classList.add('big'); ring.classList.add('big'); });
+      el.addEventListener('mouseleave',()=>{ cursor.classList.remove('big'); ring.classList.remove('big'); });
+    });
+
+    // ── Scroll reveal
+    const obs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+    // ── Stagger siblings
+    document.querySelectorAll('.services-grid, .port-grid, .test-grid, .stats-grid').forEach(grid=>{
+      [...grid.children].forEach((child,i)=>{ child.style.transitionDelay = (i*0.08)+'s'; });
+    });
+  </script>
+</body>
+</html>
