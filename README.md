@@ -522,7 +522,7 @@
         </a>
 
         <!-- CAFETARIA AURORA DOURADA -->
-        <a class="port-card reveal" href="https://lukenyweb.github.io/Cafetaria-Aurora-Dourada/" target="_blank">
+        <a class="port-card reveal" href="https://lukenyweb.github.io/Cafetaria-Aurora-Dourada-/" target="_blank">
           <div class="port-card-img">
             <div class="port-card-bar"></div>
             <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=85" alt="Cafetaria Aurora Dourada">
@@ -541,7 +541,7 @@
         </a>
 
         <!-- SALÃO DE BELEZA -->
-        <a class="port-card reveal" href="https://lukenyweb.github.io/Sal%C3%A3o-de-Beleza-Luxo/" target="_blank">
+        <a class="port-card reveal" href="https://lukenyweb.github.io/Sal-o-de-Beleza-Luxo/" target="_blank">
           <div class="port-card-img">
             <div class="port-card-bar"></div>
             <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=85" alt="Salão de Beleza Luxo e Elegância">
