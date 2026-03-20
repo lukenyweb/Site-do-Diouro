@@ -164,22 +164,24 @@
     #portfolio { padding: 120px 0; }
     .port-head { margin-bottom: 64px; }
 
-    /* GRID 2 colunas, gap generoso */
     .port-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 24px;
     }
 
+    /* CARD AGORA É UM LINK REAL */
     .port-card {
       position: relative;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,.08);
       background: #0c0a07;
       transition: border-color .4s, transform .35s, box-shadow .4s;
-      cursor: none;
+      cursor: pointer;
       display: flex;
       flex-direction: column;
+      text-decoration: none;
+      color: inherit;
     }
     .port-card:hover {
       border-color: rgba(201,168,76,.45);
@@ -187,7 +189,6 @@
       box-shadow: 0 32px 72px rgba(0,0,0,.65), 0 0 0 1px rgba(201,168,76,.1);
     }
 
-    /* Imagem proporção 3:2 */
     .port-card-img {
       width: 100%;
       aspect-ratio: 3/2;
@@ -205,7 +206,6 @@
       filter: brightness(.38) saturate(1.2);
     }
 
-    /* Gradiente dourado sutil ao hover */
     .port-card-img::after {
       content: '';
       position: absolute; inset: 0;
@@ -215,7 +215,28 @@
     }
     .port-card:hover .port-card-img::after { opacity: 1; }
 
-    /* Número decorativo */
+    /* Badge "Ver Site" que aparece ao hover */
+    .port-card-view {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.85);
+      background: var(--gold);
+      color: #000;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      opacity: 0;
+      transition: opacity .3s, transform .3s;
+      z-index: 3;
+      white-space: nowrap;
+    }
+    .port-card:hover .port-card-view {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
     .port-card-num {
       position: absolute; top: 14px; right: 16px;
       font-family: 'Bebas Neue'; font-size: 48px;
@@ -225,7 +246,6 @@
     }
     .port-card:hover .port-card-num { color: rgba(201,168,76,.26); }
 
-    /* Barra dourada no topo */
     .port-card-bar {
       position: absolute; top: 0; left: 0; right: 0; height: 2px;
       background: linear-gradient(90deg, var(--gold), var(--gold-light), transparent);
@@ -236,7 +256,6 @@
     }
     .port-card:hover .port-card-bar { transform: scaleX(1); }
 
-    /* Corpo do card */
     .port-card-body {
       padding: 26px 28px 28px;
       display: flex;
@@ -470,7 +489,7 @@
     </div>
   </section>
 
-  <!-- ══════ PORTEFÓLIO ══════ -->
+  <!-- PORTEFÓLIO -->
   <section id="portfolio">
     <div class="sec-wrap">
       <div class="port-head">
@@ -479,15 +498,15 @@
         <h2 class="sec-title">Trabalhos <em style="font-style:italic;color:var(--gold-light)">Realizados</em></h2>
       </div>
 
-      <!-- CARDS -->
       <div class="port-grid">
 
         <!-- BARBEARIA LUXO -->
-        <div class="port-card reveal">
+        <a class="port-card reveal" href="https://lukenyweb.github.io/Barbearia-Luxo/" target="_blank" rel="noopener">
           <div class="port-card-img">
             <div class="port-card-bar"></div>
             <img src="https://images.pexels.com/photos/3998429/pexels-photo-3998429.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Barbearia Luxo">
             <div class="port-card-num">01</div>
+            <div class="port-card-view">Ver Site →</div>
           </div>
           <div class="port-card-body">
             <div class="port-card-tag">✂️ &nbsp;Barbearia</div>
@@ -498,14 +517,15 @@
               <div class="port-card-arrow">→</div>
             </div>
           </div>
-        </div>
+        </a>
 
         <!-- CAFETARIA AURORA DOURADA -->
-        <div class="port-card reveal">
+        <a class="port-card reveal" href="https://lukenyweb.github.io/Cafetaria-Aurora-Dourada/" target="_blank" rel="noopener">
           <div class="port-card-img">
             <div class="port-card-bar"></div>
             <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=85" alt="Cafetaria Aurora Dourada">
             <div class="port-card-num">02</div>
+            <div class="port-card-view">Ver Site →</div>
           </div>
           <div class="port-card-body">
             <div class="port-card-tag">☕ &nbsp;Cafetaria</div>
@@ -516,14 +536,15 @@
               <div class="port-card-arrow">→</div>
             </div>
           </div>
-        </div>
+        </a>
 
-        <!-- SALÃO DE BELEZA LUXO & ELEGÂNCIA -->
-        <div class="port-card reveal">
+        <!-- SALÃO DE BELEZA -->
+        <a class="port-card reveal" href="https://lukenyweb.github.io/Salao-de-Beleza/" target="_blank" rel="noopener">
           <div class="port-card-img">
             <div class="port-card-bar"></div>
             <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=85" alt="Salão de Beleza Luxo e Elegância">
             <div class="port-card-num">03</div>
+            <div class="port-card-view">Ver Site →</div>
           </div>
           <div class="port-card-body">
             <div class="port-card-tag">💅 &nbsp;Salão de Beleza</div>
@@ -534,14 +555,15 @@
               <div class="port-card-arrow">→</div>
             </div>
           </div>
-        </div>
+        </a>
 
         <!-- PASTELARIA DOCE SABOR -->
-        <div class="port-card reveal">
+        <a class="port-card reveal" href="https://lukenyweb.github.io/Pastelaria-Doce-Sabor/" target="_blank" rel="noopener">
           <div class="port-card-img">
             <div class="port-card-bar"></div>
             <img src="https://images.pexels.com/photos/205961/pexels-photo-205961.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Pastelaria Doce Sabor">
             <div class="port-card-num">04</div>
+            <div class="port-card-view">Ver Site →</div>
           </div>
           <div class="port-card-body">
             <div class="port-card-tag">🍰 &nbsp;Pastelaria</div>
@@ -552,7 +574,7 @@
               <div class="port-card-arrow">→</div>
             </div>
           </div>
-        </div>
+        </a>
 
       </div>
     </div>
@@ -615,7 +637,6 @@
   </footer>
 
   <script>
-    // ── Cursor
     const cursor = document.getElementById('cursor');
     const ring   = document.getElementById('cursorRing');
     let mx=0,my=0,rx=0,ry=0;
@@ -633,13 +654,11 @@
       el.addEventListener('mouseleave',()=>{ cursor.classList.remove('big'); ring.classList.remove('big'); });
     });
 
-    // ── Scroll reveal
     const obs = new IntersectionObserver(entries=>{
       entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
     }, {threshold:.12});
     document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-    // ── Stagger siblings
     document.querySelectorAll('.services-grid, .port-grid, .test-grid, .stats-grid').forEach(grid=>{
       [...grid.children].forEach((child,i)=>{ child.style.transitionDelay = (i*0.08)+'s'; });
     });
