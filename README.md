@@ -501,7 +501,7 @@
       <div class="port-grid">
 
         <!-- BARBEARIA LUXO -->
-        <a class="port-card reveal" href="https://lukenyweb.github.io/Barbearia-Luxo/" target="_blank" rel="noopener">
+        <a class="port-card reveal" href="https://lukenyweb.github.io/Barbearia-Luxo-/" target="_blank" rel="noopener">
           <div class="port-card-img">
             <div class="port-card-bar"></div>
             <img src="https://images.pexels.com/photos/3998429/pexels-photo-3998429.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Barbearia Luxo">
@@ -539,7 +539,7 @@
         </a>
 
         <!-- SALÃO DE BELEZA -->
-        <a class="port-card reveal" href="https://lukenyweb.github.io/Salao-de-Beleza/" target="_blank" rel="noopener">
+        <a class="port-card reveal" href="https://lukenyweb.github.io/Sal%C3%A3o-de-Beleza-Luxo-/" target="_blank" rel="noopener">
           <div class="port-card-img">
             <div class="port-card-bar"></div>
             <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=85" alt="Salão de Beleza Luxo e Elegância">
@@ -558,7 +558,7 @@
         </a>
 
         <!-- PASTELARIA DOCE SABOR -->
-        <a class="port-card reveal" href="https://lukenyweb.github.io/Pastelaria-Doce-Sabor/" target="_blank" rel="noopener">
+        <a class="port-card reveal" href="https://lukenyweb.github.io/Pastelaria-Doce-Sabor-/" target="_blank" rel="noopener">
           <div class="port-card-img">
             <div class="port-card-bar"></div>
             <img src="https://images.pexels.com/photos/205961/pexels-photo-205961.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Pastelaria Doce Sabor">
