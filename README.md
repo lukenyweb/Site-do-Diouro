@@ -539,7 +539,7 @@
         </a>
 
         <!-- SALÃO DE BELEZA -->
-        <a class="port-card reveal" href="https://lukenyweb.github.io/Sal%C3%A3o-de-Beleza-Luxo-/" target="_blank" rel="noopener">
+        <a class="port-card reveal" href="https://lukenyweb.github.io/Sal-o-de-Beleza-Luxo-/" target="_blank" rel="noopener">
           <div class="port-card-img">
             <div class="port-card-bar"></div>
             <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=85" alt="Salão de Beleza Luxo e Elegância">
